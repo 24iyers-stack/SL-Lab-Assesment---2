@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brown">#6B3A2A</color>
+    <color name="brown_light">#D4956A</color>
+    <color name="cream">#F5F0EC</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_dark">#1A0A00</color>
+    <color name="text_gray">#888888</color>
+    <color name="text_hint">#BBBBBB</color>
+    <color name="red">#E74C3C</color>
+    <color name="green">#16A34A</color>
+    <color name="divider">#F0E8E0</color>
+</resources>

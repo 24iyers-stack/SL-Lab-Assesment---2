@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cafe Booking</string>
+    <string-array name="services">
+        <item>Select a Coffee</item>
+        <item>Cafe Latte - ₹180</item>
+        <item>Cappuccino - ₹170</item>
+        <item>Americano - ₹140</item>
+        <item>Cold Coffee - ₹160</item>
+        <item>Espresso - ₹100</item>
+    </string-array>
+    <string-array name="payment_methods">
+        <item>Select Payment Method</item>
+        <item>Cash on Delivery</item>
+        <item>UPI / GPay</item>
+        <item>Credit / Debit Card</item>
+        <item>Wallet</item>
+    </string-array>
+    <string-array name="coffee_size">
+        <item>Small (+₹0)</item>
+        <item>Medium (+₹20)</item>
+        <item>Large (+₹40)</item>
+    </string-array>
+</resources>
