@@ -2,7 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CafeBookingApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/brown</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/brown_light</item>
+        <item name="colorSecondary">@color/accent_gold</item>
+        <item name="android:windowBackground">@color/cream</item>
+        <item name="android:statusBarColor">@color/cream</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.CafeBookingApp" parent="Base.Theme.CafeBookingApp" />

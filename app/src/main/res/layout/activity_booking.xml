@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F0EC"
+    android:background="@color/cream"
     android:fillViewport="true">
 
     <LinearLayout
@@ -14,188 +15,235 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Place Order"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#6B3A2A"
+            android:text="Customize Your Order"
+            android:textSize="26sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/brown"
             android:layout_marginTop="12dp"/>
 
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello, User!"
+            android:text="Select your favorite brew"
             android:textSize="14sp"
-            android:textColor="#888888"
+            android:textColor="@color/text_gray"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Coffee selection -->
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Select Coffee" android:textSize="13sp"
-            android:textColor="#6B3A2A" android:textStyle="bold"/>
-
-        <Spinner
-            android:id="@+id/spinnerService"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_input"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:entries="@array/services"/>
-
-        <!-- Customization -->
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Customize Your Coffee"
-            android:textSize="13sp"
-            android:textColor="#6B3A2A"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="@color/white">
 
-        <!-- Size -->
-        <Spinner
-            android:id="@+id/spinnerSize"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Coffee selection -->
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Select Coffee" android:textSize="14sp"
+                    android:textColor="@color/brown" android:textStyle="bold"/>
+
+                <Spinner
+                    android:id="@+id/spinnerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:entries="@array/services"/>
+
+                <!-- Size -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cup Size"
+                    android:textSize="14sp"
+                    android:textColor="@color/brown"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:entries="@array/coffee_size"/>
+
+                <!-- Add-ons -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Extras"
+                    android:textSize="14sp"
+                    android:textColor="@color/brown"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <CheckBox
+                    android:id="@+id/cbExtraShot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Extra Espresso Shot (+₹30)"
+                    android:buttonTint="@color/brown"/>
+
+                <CheckBox
+                    android:id="@+id/cbWhippedCream"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Whipped Cream (+₹20)"
+                    android:buttonTint="@color/brown"/>
+
+                <CheckBox
+                    android:id="@+id/cbCold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Make it Cold (+₹10)"
+                    android:buttonTint="@color/brown"/>
+
+                <!-- Quantity -->
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Quantity" android:textSize="14sp"
+                    android:textColor="@color/brown" android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/etQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:hint="How many cups?"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_dark"/>
+
+                <!-- Delivery Address -->
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Delivery Address" android:textSize="14sp"
+                    android:textColor="@color/brown" android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:padding="16dp"
+                    android:hint="Where should we deliver?"
+                    android:inputType="textMultiLine"
+                    android:gravity="top"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_dark"/>
+
+                <!-- Payment Method -->
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Payment Method" android:textSize="14sp"
+                    android:textColor="@color/brown" android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:entries="@array/payment_methods"/>
+
+                <!-- Special Instructions -->
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Special Instructions" android:textSize="14sp"
+                    android:textColor="@color/brown" android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/etNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:padding="16dp"
+                    android:hint="Any special requests?"
+                    android:inputType="textMultiLine"
+                    android:gravity="top"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_dark"/>
+
+                <TextView
+                    android:id="@+id/tvValidation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Please fill all required fields"
+                    android:textColor="@color/red"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_input"
-            android:entries="@array/coffee_size"/>
-
-        <!-- Add-ons -->
-        <CheckBox
-            android:id="@+id/cbExtraShot"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Extra Espresso Shot (+₹30)"/>
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="@color/brown">
 
-        <CheckBox
-            android:id="@+id/cbWhippedCream"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Whipped Cream (+₹20)"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
 
-        <CheckBox
-            android:id="@+id/cbCold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Make it Cold (+₹10)"/>
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: ₹0"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_centerVertical="true"/>
 
-        <!-- Quantity -->
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Quantity" android:textSize="13sp"
-            android:textColor="#6B3A2A" android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+                <Button
+                    android:id="@+id/btnBook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/bg_button_primary"
+                    android:backgroundTint="@color/accent_gold"
+                    android:text="Pay Now"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/brown_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:enabled="false"
+                    android:alpha="0.5"
+                    app:backgroundTint="@null"/>
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <EditText
-            android:id="@+id/etQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_input"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:hint="e.g. 2"
-            android:inputType="number"
-            android:textSize="15sp"
-            android:textColor="#1A0A00"
-            android:textColorHint="#BBBBBB"/>
-
-        <!-- Delivery Address -->
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Delivery Address" android:textSize="13sp"
-            android:textColor="#6B3A2A" android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <EditText
-            android:id="@+id/etAddress"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_input"
-            android:padding="14dp"
-            android:hint="House no, Street, Area, City"
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:textSize="15sp"
-            android:textColor="#1A0A00"
-            android:textColorHint="#BBBBBB"/>
-
-        <!-- Payment Method -->
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Payment Method" android:textSize="13sp"
-            android:textColor="#6B3A2A" android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <Spinner
-            android:id="@+id/spinnerPayment"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_input"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:entries="@array/payment_methods"/>
-
-        <!-- Special Instructions -->
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Special Instructions (Optional)" android:textSize="13sp"
-            android:textColor="#6B3A2A" android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <EditText
-            android:id="@+id/etNote"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_input"
-            android:padding="14dp"
-            android:hint="e.g. Extra sugar, no ice..."
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:textSize="15sp"
-            android:textColor="#1A0A00"
-            android:textColorHint="#BBBBBB"/>
-
-        <!-- Validation message -->
-        <TextView
-            android:id="@+id/tvValidation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Please fill all required fields"
-            android:textColor="#E74C3C"
-            android:textSize="12sp"
-            android:visibility="gone"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/tvTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Total: ₹0"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#6B3A2A"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Place Order button — disabled by default -->
-        <Button
-            android:id="@+id/btnBook"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_button_primary"
-            android:text="Place Order"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:enabled="false"
-            android:alpha="0.5"
-            android:stateListAnimator="@null"/>
-
-        <Space android:layout_width="0dp" android:layout_height="20dp"/>
+        <Space android:layout_width="0dp" android:layout_height="40dp"/>
 
     </LinearLayout>
 </ScrollView>

@@ -30,12 +30,29 @@ public class BookingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check for session/profile
+        SharedPreferences sessionPrefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences profilePrefs = getSharedPreferences("UserProfile", MODE_PRIVATE);
+
+        boolean isLoggedIn = sessionPrefs.getBoolean("isLoggedIn", false);
+        String savedUser = profilePrefs.getString("username", null);
+        String savedPass = profilePrefs.getString("password", null);
+
+        if (!isLoggedIn || savedUser == null || savedPass == null) {
+            Toast.makeText(this, "Session expired. Please login again.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_booking);
 
-        // Load user
-        SharedPreferences prefs = getSharedPreferences("UserProfile", MODE_PRIVATE);
-        userName  = prefs.getString("name", "User");
-        userPhone = prefs.getString("phone", "");
+        // Load user data
+        userName  = profilePrefs.getString("name", "User");
+        userPhone = profilePrefs.getString("phone", "");
 
         DatabaseHelper = new DatabaseHelper(this);
         createNotificationChannel();
@@ -61,7 +78,7 @@ public class BookingActivity extends AppCompatActivity {
         tvWelcome.setText("Hello, " + userName + "!");
 
         // Prefill address
-        etAddress.setText(prefs.getString("address", ""));
+        etAddress.setText(profilePrefs.getString("address", ""));
 
         setupListeners();
 
@@ -70,7 +87,7 @@ public class BookingActivity extends AppCompatActivity {
         updatePrice(); // initial price
     }
 
-    // 🔥 LISTENERS
+    // LISTENERS
     private void setupListeners() {
 
         TextWatcher watcher = new TextWatcher() {
@@ -112,7 +129,7 @@ public class BookingActivity extends AppCompatActivity {
         cbCold.setOnCheckedChangeListener((b, c) -> updatePrice());
     }
 
-    // 🔥 VALIDATION
+    // VALIDATION
     private void checkFields() {
         boolean serviceOk  = spinnerService.getSelectedItemPosition() > 0;
         boolean paymentOk  = spinnerPayment.getSelectedItemPosition() > 0;
@@ -126,7 +143,7 @@ public class BookingActivity extends AppCompatActivity {
         tvValidation.setVisibility(allFilled ? android.view.View.GONE : android.view.View.VISIBLE);
     }
 
-    // 🔥 PRICE CALCULATION
+    // PRICE CALCULATION
     private int calculatePrice() {
 
         int basePrice = 0;
@@ -160,7 +177,7 @@ public class BookingActivity extends AppCompatActivity {
         tvTotal.setText("Total: ₹" + total);
     }
 
-    // 🔥 CONFIRM DIALOG
+    // CONFIRM DIALOG
     private void showConfirmDialog() {
 
         String service = spinnerService.getSelectedItem().toString();
@@ -185,7 +202,7 @@ public class BookingActivity extends AppCompatActivity {
                 .show();
     }
 
-    // 🔥 PLACE ORDER
+    // PLACE ORDER
     private void placeOrder(String service, String qty, String address, String payment) {
 
         String note = etNote.getText().toString().trim();
@@ -205,7 +222,7 @@ public class BookingActivity extends AppCompatActivity {
             intent.putExtra("qty", qty);
             intent.putExtra("address", address);
             intent.putExtra("payment", payment);
-            intent.putExtra("total", calculatePrice()); // 👈 PASS PRICE
+            intent.putExtra("total", calculatePrice());
 
             startActivity(intent);
             finish();
@@ -215,7 +232,7 @@ public class BookingActivity extends AppCompatActivity {
         }
     }
 
-    // 🔥 NOTIFICATION
+    // NOTIFICATION
     private void sendNotification(String service) {
         Intent intent = new Intent(this, HistoryActivity.class);
 
