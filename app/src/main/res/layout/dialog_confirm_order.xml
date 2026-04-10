@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="28dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="☕"
+            android:textSize="48sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm Order"
+            android:textSize="22sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/brown"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/surface_variant"
+            android:padding="16dp">
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Item" android:textColor="@color/text_gray" android:textSize="14sp"/>
+                <TextView android:id="@+id/dialogItem" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:textStyle="bold" android:textColor="@color/brown" android:text="Cappuccino"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Quantity" android:textColor="@color/text_gray" android:textSize="14sp"/>
+                <TextView android:id="@+id/dialogQty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:textStyle="bold" android:textColor="@color/text_dark" android:text="1"/>
+            </RelativeLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" android:layout_marginBottom="12dp"/>
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Amount" android:textColor="@color/text_gray" android:textSize="14sp"/>
+                <TextView android:id="@+id/dialogTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:textStyle="bold" android:textColor="@color/brown" android:textSize="16sp" android:text="₹170"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Payment" android:textColor="@color/text_gray" android:textSize="14sp"/>
+                <TextView android:id="@+id/dialogPayment" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:textStyle="bold" android:textColor="@color/green" android:text="Cash"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dialogAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Deliver to: 123 Street Name, City"
+            android:textSize="13sp"
+            android:textColor="@color/text_gray"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_button_primary"
+            android:text="Place Order"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_button_outline"
+            android:text="Edit Order"
+            android:textAllCaps="false"
+            android:textColor="@color/brown"
+            android:textSize="16sp"
+            app:backgroundTint="@null"/>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

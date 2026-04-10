@@ -1,16 +1,20 @@
 package com.example.cafebookingapp;
 
-import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.*;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
@@ -31,7 +35,6 @@ public class BookingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Check for session/profile
         SharedPreferences sessionPrefs = getSharedPreferences("UserSession", MODE_PRIVATE);
         SharedPreferences profilePrefs = getSharedPreferences("UserProfile", MODE_PRIVATE);
 
@@ -50,14 +53,12 @@ public class BookingActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_booking);
 
-        // Load user data
         userName  = profilePrefs.getString("name", "User");
         userPhone = profilePrefs.getString("phone", "");
 
         DatabaseHelper = new DatabaseHelper(this);
         createNotificationChannel();
 
-        // Bind views
         tvWelcome      = findViewById(R.id.tvWelcome);
         spinnerService = findViewById(R.id.spinnerService);
         spinnerPayment = findViewById(R.id.spinnerPayment);
@@ -76,20 +77,14 @@ public class BookingActivity extends AppCompatActivity {
         tvTotal        = findViewById(R.id.tvTotal);
 
         tvWelcome.setText("Hello, " + userName + "!");
-
-        // Prefill address
         etAddress.setText(profilePrefs.getString("address", ""));
 
         setupListeners();
-
         btnBook.setOnClickListener(v -> showConfirmDialog());
-
-        updatePrice(); // initial price
+        updatePrice();
     }
 
-    // LISTENERS
     private void setupListeners() {
-
         TextWatcher watcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
             public void afterTextChanged(Editable s) {}
@@ -103,7 +98,7 @@ public class BookingActivity extends AppCompatActivity {
         etAddress.addTextChangedListener(watcher);
 
         spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> p, android.view.View v, int pos, long id) {
+            public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
                 checkFields();
                 updatePrice();
             }
@@ -111,14 +106,14 @@ public class BookingActivity extends AppCompatActivity {
         });
 
         spinnerPayment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> p, android.view.View v, int pos, long id) {
+            public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
                 checkFields();
             }
             public void onNothingSelected(AdapterView<?> p) {}
         });
 
         spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> p, android.view.View v, int pos, long id) {
+            public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
                 updatePrice();
             }
             public void onNothingSelected(AdapterView<?> p) {}
@@ -129,7 +124,6 @@ public class BookingActivity extends AppCompatActivity {
         cbCold.setOnCheckedChangeListener((b, c) -> updatePrice());
     }
 
-    // VALIDATION
     private void checkFields() {
         boolean serviceOk  = spinnerService.getSelectedItemPosition() > 0;
         boolean paymentOk  = spinnerPayment.getSelectedItemPosition() > 0;
@@ -140,14 +134,11 @@ public class BookingActivity extends AppCompatActivity {
 
         btnBook.setEnabled(allFilled);
         btnBook.setAlpha(allFilled ? 1.0f : 0.5f);
-        tvValidation.setVisibility(allFilled ? android.view.View.GONE : android.view.View.VISIBLE);
+        tvValidation.setVisibility(allFilled ? View.GONE : View.VISIBLE);
     }
 
-    // PRICE CALCULATION
     private int calculatePrice() {
-
         int basePrice = 0;
-
         String coffee = spinnerService.getSelectedItem().toString();
 
         if (coffee.contains("Latte")) basePrice = 180;
@@ -177,44 +168,46 @@ public class BookingActivity extends AppCompatActivity {
         tvTotal.setText("Total: ₹" + total);
     }
 
-    // CONFIRM DIALOG
     private void showConfirmDialog() {
-
         String service = spinnerService.getSelectedItem().toString();
         String qty     = etQuantity.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
         String payment = spinnerPayment.getSelectedItem().toString();
-
         int totalPrice = calculatePrice();
 
-        String message = "Confirm your order?\n\n"
-                + "Item: " + service + "\n"
-                + "Qty: " + qty + "\n"
-                + "Total: ₹" + totalPrice + "\n"
-                + "Address: " + address + "\n"
-                + "Payment: " + payment;
+        // Use custom layout for dialog
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_confirm_order, null);
+        
+        ((TextView) dialogView.findViewById(R.id.dialogItem)).setText(service);
+        ((TextView) dialogView.findViewById(R.id.dialogQty)).setText(qty);
+        ((TextView) dialogView.findViewById(R.id.dialogTotal)).setText("₹" + totalPrice);
+        ((TextView) dialogView.findViewById(R.id.dialogPayment)).setText(payment);
+        ((TextView) dialogView.findViewById(R.id.dialogAddress)).setText("Deliver to: " + address);
 
-        new AlertDialog.Builder(this)
-                .setTitle("Confirm Order")
-                .setMessage(message)
-                .setPositiveButton("Yes, Order!", (d, w) -> placeOrder(service, qty, address, payment))
-                .setNegativeButton("Cancel", null)
-                .show();
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        dialogView.findViewById(R.id.btnConfirm).setOnClickListener(v -> {
+            dialog.dismiss();
+            placeOrder(service, qty, address, payment);
+        });
+
+        dialogView.findViewById(R.id.btnCancel).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
-    // PLACE ORDER
     private void placeOrder(String service, String qty, String address, String payment) {
-
         String note = etNote.getText().toString().trim();
-
-        boolean saved = DatabaseHelper.insertOrder(
-                userName, userPhone, service, qty, address, payment, note
-        );
+        boolean saved = DatabaseHelper.insertOrder(userName, userPhone, service, qty, address, payment, note);
 
         if (saved) {
-
             sendNotification(service);
-
             Intent intent = new Intent(this, ResultActivity.class);
             intent.putExtra("name", userName);
             intent.putExtra("phone", userPhone);
@@ -223,19 +216,15 @@ public class BookingActivity extends AppCompatActivity {
             intent.putExtra("address", address);
             intent.putExtra("payment", payment);
             intent.putExtra("total", calculatePrice());
-
             startActivity(intent);
             finish();
-
         } else {
             Toast.makeText(this, "Error placing order!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // NOTIFICATION
     private void sendNotification(String service) {
         Intent intent = new Intent(this, HistoryActivity.class);
-
         PendingIntent pi = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
@@ -247,17 +236,13 @@ public class BookingActivity extends AppCompatActivity {
                 .setContentIntent(pi)
                 .setAutoCancel(true);
 
-        ((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
-                .notify(101, builder.build());
+        ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).notify(101, builder.build());
     }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel ch = new NotificationChannel(
-                    CHANNEL_ID, "Order Notifications",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            ((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
-                    .createNotificationChannel(ch);
+            NotificationChannel ch = new NotificationChannel(CHANNEL_ID, "Order Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+            ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).createNotificationChannel(ch);
         }
     }
 }

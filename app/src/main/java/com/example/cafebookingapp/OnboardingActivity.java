@@ -16,11 +16,11 @@ public class OnboardingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Check if onboarding was already shown
-        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        if (prefs.getBoolean("onboarding_shown", false)) {
-            goToLogin();
-            return;
-        }
+//        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+//        if (prefs.getBoolean("onboarding_shown", false)) {
+//            goToLogin();
+//            return;
+//        }
 
         setContentView(R.layout.activity_onboarding);
 
@@ -39,7 +39,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         btnGetStarted.setOnClickListener(v -> {
             // Mark as shown
-            prefs.edit().putBoolean("onboarding_shown", true).apply();
+//            prefs.edit().putBoolean("onboarding_shown", true).apply();
             goToLogin();
         });
     }
